@@ -14,7 +14,7 @@ class Circle : public Figure {
 
   double GetArea() const  override;
 
-  int GetType() const  override;
+  void accept(Visitor& v) override;
 };
 
 #endif  // _Circle_HeaderFile

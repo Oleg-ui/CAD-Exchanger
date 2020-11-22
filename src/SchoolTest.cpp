@@ -5,6 +5,7 @@
 #include "Figure.h"
 #include "Circle.h"
 #include "Ellipse.h"
+#include <GetType.h>
 #include <vector>
 #include <memory>
 
@@ -24,6 +25,8 @@ int main()
         int size_v = 10;
         double allCircle = 0.0;
         double allEllipse = 0.0;
+        int count_circles = 0;
+        int count_ellipses = 0;
         vector<unique_ptr<Figure>> figures(size_v);
         //Заполняю вектор объектами в случайном порядке со случайными значениями
         for (int i = 0; i < size_v; i++)
@@ -40,26 +43,39 @@ int main()
         //Сортирую вектор
         sort(figures.begin(), figures.end(), comp);
         //Печатаю отсортированный вектор
-        for (int i = 0; i < size_v; i++)
+        for (auto const& element : figures)
         {
-          cout << figures[i]->GetArea() << endl;
+          GetType visitor;
+          element->accept(visitor);
+
+          cout << visitor.type << " = " << element->GetArea() << endl;
         }
+        cout << endl;
         //Просчитываю общую площадь окружностей и эллипсов
-        for (int i = 0; i < size_v; i++)
+        for (auto const& element : figures)
         {
-            if (figures[i]->GetType() == 1)
+            GetType visitor;
+            element->accept(visitor);
+
+            if (visitor.type == "Circle")
             {
-                allCircle += figures[i]->GetArea();
+                allCircle += element->GetArea();
+                count_circles++;
             }
             
-            if (figures[i]->GetType() == 2)
+            if (visitor.type == "Ellipse")
             {
-                allEllipse += figures[i]->GetArea();
+                allEllipse += element->GetArea();
+                count_ellipses++;
+
             }
         }
         //Печатаю результаты
+        cout << "Всего элементов = " << size_v << endl;
         cout << "Общая площадь окружностей = " << allCircle << endl;
         cout << "Общая площадь эллипсов = " << allEllipse << endl;
+        cout << "Окружностей = " << count_circles << endl;
+        cout << "Эллипсов = " << count_ellipses << endl;
     }
     catch (const char* msg)
     {

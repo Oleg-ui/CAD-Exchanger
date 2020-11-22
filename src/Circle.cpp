@@ -16,7 +16,7 @@ double Circle::GetArea() const
   return M_PI * rad * rad;
 }
 
-int Circle::GetType() const 
-{ 
-  return 1; 
+void Circle::accept(Visitor& v)
+{
+  v.visit(*this);
 }

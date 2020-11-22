@@ -16,7 +16,7 @@ double Ellipse::GetArea() const
   return M_PI * a * b;
 }
 
-int Ellipse::GetType() const
+void Ellipse::accept(Visitor& v)
 {
-  return 2;
+  v.visit(*this); 
 }

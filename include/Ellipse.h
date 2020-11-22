@@ -15,7 +15,7 @@ class Ellipse : public Figure {
 
   virtual double GetArea() const  override;
 
-  virtual int GetType() const  override;
+  void accept(Visitor& v) override;
 };
 
 #endif  // _Ellipse_HeaderFile
